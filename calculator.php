@@ -16,6 +16,8 @@ First Number:<br>
 Secon Number:<br>
 <input type="text" name="lastname">
 <input type="submit">
+<input type="submit">
+<input type="submit">
 </form>
 
 </body>
