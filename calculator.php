@@ -8,7 +8,7 @@
     }
 ?>
 
-<h2>Calculator</h2>
+<h2>Calculator2</h2>
 <form action="welcome_get.php" method="get" >
 First Number:<br>
 <input type="text" name="firstname">
