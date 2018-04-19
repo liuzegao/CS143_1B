@@ -30,9 +30,17 @@ Example: SELECT * FROM Actor WHERE id=10;
     //Issuing the query
     $query = $val;
     $rs = $db->query($query);
-
-    if()
-    {
+    if ($rs->num_rows > 0){
+      //$ip = "id";
+      echo "<table border='1' width='600'>";
+      echo "<tr>";
+      echo "<td>"."<b>$id</b>"."</td>";
+      echo "<td>"."<b>last</b>"."</td>";
+      echo "<td>"."<b>first</b>"."</td>";
+      echo "<td>"."sex"."</td>";
+      echo "<td>"."dob"."</td>";
+      echo "<td>"."dod"."</td>";
+      echo "</tr>";
       while($row = $rs->fetch_assoc()) {
         $id = $row['id'];
         $lname = $row['last'];
@@ -40,17 +48,25 @@ Example: SELECT * FROM Actor WHERE id=10;
         $sex = $row['sex'];
         $dob = $row['dob'];
         $dod = $row['dod'];
-        print "$id, $lname, $fname, $sex, $dob, $dod <br />";
+        echo "<tr>";
+        echo "<td>".($id)."</td>";
+        echo "<td>".($lname)."</td>";
+        echo "<td>".($fname)."</td>";
+        echo "<td>".($sex)."</td>";
+        echo "<td>".($dob)."</td>";
+        if (isset($dod)){
+          echo "<td>".($dod)."</td>";
+        }else{
+          echo "<td>"."N/A"."</td>";
+        }
+        echo "</tr>";
+        //print "$id, $lname, $fname, $sex, $dob, $dod <br />";
       }
+      echo "</table>";
     }
-
-
 
   }
 ?>
-
-
-
 
 
 </body>
