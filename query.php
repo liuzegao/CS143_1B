@@ -2,12 +2,10 @@
 <html>
 <body>
 
+<h1>SQL BOX</h1>
 <p>
-SQL BOX
-</p>
 <br>Type an SQL query in the following box:
-<p>
-Example: SELECT * FROM Actor WHERE id=10;
+<br>Example: SELECT * FROM Actor WHERE id=10;
 </p>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 <textarea name="query" cols="60" rows="8" style="margin: 0px; width: 590px; height: 269px;"></textarea>
@@ -16,12 +14,13 @@ Example: SELECT * FROM Actor WHERE id=10;
 </form>
 
 <?php
+
   if ($_SERVER["REQUEST_METHOD"] == "POST")
   {
     $val = $_REQUEST['query'];
 
     //Connect PHP code with SQL
-    $db = new mysqli('localhost', 'cs143', '', 'TEST');
+    $db = new mysqli('localhost', 'cs143', '', 'CS143');
     if($db->connect_errno > 0)
     {
       die('Unable to connect to database [' . $db->connect_error . ']');
@@ -31,43 +30,33 @@ Example: SELECT * FROM Actor WHERE id=10;
     $query = $val;
     $rs = $db->query($query);
     if ($rs->num_rows > 0){
-      //$ip = "id";
-      echo "<table border='1' width='600'>";
-      echo "<tr>";
-      echo "<td>"."<b>$id</b>"."</td>";
-      echo "<td>"."<b>last</b>"."</td>";
-      echo "<td>"."<b>first</b>"."</td>";
-      echo "<td>"."sex"."</td>";
-      echo "<td>"."dob"."</td>";
-      echo "<td>"."dod"."</td>";
-      echo "</tr>";
-      while($row = $rs->fetch_assoc()) {
-        $id = $row['id'];
-        $lname = $row['last'];
-        $fname = $row['first'];
-        $sex = $row['sex'];
-        $dob = $row['dob'];
-        $dod = $row['dod'];
-        echo "<tr>";
-        echo "<td>".($id)."</td>";
-        echo "<td>".($lname)."</td>";
-        echo "<td>".($fname)."</td>";
-        echo "<td>".($sex)."</td>";
-        echo "<td>".($dob)."</td>";
-        if (isset($dod)){
-          echo "<td>".($dod)."</td>";
-        }else{
-          echo "<td>"."N/A"."</td>";
+        $display = "<table border='1' width='600'>";
+        foreach($rs as $key => $var) {
+        if($key===0) {
+            $display .= '<tr>';
+            foreach($var as $col => $val) {
+                $display .= "<td>" . "<b>$col</b>" . '</td>';
+            }
+            $display .= '</tr>';
+            $display .= '<tr>';
+            foreach($var as $col => $val) {
+                $display .= '<td>' . $val . '</td>';
+            }
+            $display .= '</tr>';
         }
-        echo "</tr>";
-        //print "$id, $lname, $fname, $sex, $dob, $dod <br />";
-      }
-      echo "</table>";
+        else {
+            $display .= '<tr>';
+            foreach($var as $col => $val) {
+                $display .= '<td>' . $val . '</td>';
+            }
+            $display .= '</tr>';
+        }
     }
-
+    $display .= '</table>';
+    echo $display;
+    }
   }
 ?>
-
 
 </body>
 </html>
